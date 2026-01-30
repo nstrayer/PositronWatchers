@@ -1,0 +1,589 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		001 /* PositronWatchersApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101; };
+		002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102; };
+		003 /* ServiceContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103; };
+		004 /* WatchedProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = 104; };
+		005 /* ProcessPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105; };
+		006 /* ProcessGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106; };
+		007 /* ProcessMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107; };
+		008 /* GlobMatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108; };
+		009 /* CrashDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109; };
+		010 /* MenuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 110; };
+		011 /* ProcessInfoFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 111; };
+		012 /* SettingsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112; };
+		013 /* ProcessMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113; };
+		014 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 114; };
+		015 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 115; };
+		016 /* GlobMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118; };
+		017 /* CrashDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		900 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 700 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 500;
+			remoteInfo = PositronWatchers;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		100 /* PositronWatchers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PositronWatchers.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		101 /* PositronWatchersApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositronWatchersApp.swift; sourceTree = "<group>"; };
+		102 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		103 /* ServiceContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceContainer.swift; sourceTree = "<group>"; };
+		104 /* WatchedProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchedProcess.swift; sourceTree = "<group>"; };
+		105 /* ProcessPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessPattern.swift; sourceTree = "<group>"; };
+		106 /* ProcessGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessGroup.swift; sourceTree = "<group>"; };
+		107 /* ProcessMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessMonitor.swift; sourceTree = "<group>"; };
+		108 /* GlobMatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobMatcher.swift; sourceTree = "<group>"; };
+		109 /* CrashDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashDetector.swift; sourceTree = "<group>"; };
+		110 /* MenuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarController.swift; sourceTree = "<group>"; };
+		111 /* ProcessInfoFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessInfoFetcher.swift; sourceTree = "<group>"; };
+		112 /* SettingsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsStorage.swift; sourceTree = "<group>"; };
+		113 /* ProcessMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessMenuView.swift; sourceTree = "<group>"; };
+		114 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
+		115 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		116 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		117 /* PositronWatchers.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PositronWatchers.entitlements; sourceTree = "<group>"; };
+		118 /* GlobMatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobMatcherTests.swift; sourceTree = "<group>"; };
+		119 /* CrashDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashDetectorTests.swift; sourceTree = "<group>"; };
+		120 /* PositronWatchersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PositronWatchersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		200 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		201 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		300 = {
+			isa = PBXGroup;
+			children = (
+				301 /* PositronWatchers */,
+				312 /* PositronWatchersTests */,
+				400 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		301 /* PositronWatchers */ = {
+			isa = PBXGroup;
+			children = (
+				302 /* App */,
+				303 /* Domain */,
+				306 /* Infrastructure */,
+				310 /* Presentation */,
+				311 /* Resources */,
+			);
+			path = PositronWatchers;
+			sourceTree = "<group>";
+		};
+		302 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				101 /* PositronWatchersApp.swift */,
+				102 /* AppDelegate.swift */,
+				103 /* ServiceContainer.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		303 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				304 /* Models */,
+				305 /* Services */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		304 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				104 /* WatchedProcess.swift */,
+				105 /* ProcessPattern.swift */,
+				106 /* ProcessGroup.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		305 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				107 /* ProcessMonitor.swift */,
+				108 /* GlobMatcher.swift */,
+				109 /* CrashDetector.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		306 /* Infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				307 /* MenuBar */,
+				308 /* Process */,
+				309 /* Persistence */,
+			);
+			path = Infrastructure;
+			sourceTree = "<group>";
+		};
+		307 /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				110 /* MenuBarController.swift */,
+			);
+			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		308 /* Process */ = {
+			isa = PBXGroup;
+			children = (
+				111 /* ProcessInfoFetcher.swift */,
+			);
+			path = Process;
+			sourceTree = "<group>";
+		};
+		309 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				112 /* SettingsStorage.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		310 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				113 /* ProcessMenuView.swift */,
+				114 /* PreferencesWindow.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		311 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				115 /* Assets.xcassets */,
+				116 /* Info.plist */,
+				117 /* PositronWatchers.entitlements */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		312 /* PositronWatchersTests */ = {
+			isa = PBXGroup;
+			children = (
+				118 /* GlobMatcherTests.swift */,
+				119 /* CrashDetectorTests.swift */,
+			);
+			path = PositronWatchersTests;
+			sourceTree = "<group>";
+		};
+		400 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				100 /* PositronWatchers.app */,
+				120 /* PositronWatchersTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		500 /* PositronWatchers */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 600;
+			buildPhases = (
+				501 /* Sources */,
+				200 /* Frameworks */,
+				502 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PositronWatchers;
+			productName = PositronWatchers;
+			productReference = 100 /* PositronWatchers.app */;
+			productType = "com.apple.product-type.application";
+		};
+		510 /* PositronWatchersTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 610;
+			buildPhases = (
+				511 /* Sources */,
+				201 /* Frameworks */,
+				512 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				901 /* PBXTargetDependency */,
+			);
+			name = PositronWatchersTests;
+			productName = PositronWatchersTests;
+			productReference = 120 /* PositronWatchersTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		700 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					500 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					510 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = 500;
+					};
+				};
+			};
+			buildConfigurationList = 701;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 300;
+			productRefGroup = 400 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				500 /* PositronWatchers */,
+				510 /* PositronWatchersTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		502 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				015 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		512 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		501 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				001 /* PositronWatchersApp.swift in Sources */,
+				002 /* AppDelegate.swift in Sources */,
+				003 /* ServiceContainer.swift in Sources */,
+				004 /* WatchedProcess.swift in Sources */,
+				005 /* ProcessPattern.swift in Sources */,
+				006 /* ProcessGroup.swift in Sources */,
+				007 /* ProcessMonitor.swift in Sources */,
+				008 /* GlobMatcher.swift in Sources */,
+				009 /* CrashDetector.swift in Sources */,
+				010 /* MenuBarController.swift in Sources */,
+				011 /* ProcessInfoFetcher.swift in Sources */,
+				012 /* SettingsStorage.swift in Sources */,
+				013 /* ProcessMenuView.swift in Sources */,
+				014 /* PreferencesWindow.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		511 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				016 /* GlobMatcherTests.swift in Sources */,
+				017 /* CrashDetectorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		901 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 500 /* PositronWatchers */;
+			targetProxy = 900 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		800 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		801 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = arm64;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		802 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PositronWatchers/Resources/PositronWatchers.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PositronWatchers/Resources/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.positron.process-watcher";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		803 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = PositronWatchers/Resources/PositronWatchers.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PositronWatchers/Resources/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.positron.process-watcher";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		804 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.positron.process-watcher-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PositronWatchers.app/Contents/MacOS/PositronWatchers";
+			};
+			name = Debug;
+		};
+		805 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.positron.process-watcher-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PositronWatchers.app/Contents/MacOS/PositronWatchers";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		600 /* Build configuration list for PBXNativeTarget "PositronWatchers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				802 /* Debug */,
+				803 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		610 /* Build configuration list for PBXNativeTarget "PositronWatchersTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				804 /* Debug */,
+				805 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		701 /* Build configuration list for PBXProject "PositronWatchers" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				800 /* Debug */,
+				801 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 700 /* Project object */;
+}
