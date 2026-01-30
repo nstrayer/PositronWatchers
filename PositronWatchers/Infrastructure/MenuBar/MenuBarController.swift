@@ -70,23 +70,11 @@ final class MenuBarController {
                 }
 
                 // Working directory header
-                let headerItem = NSMenuItem(title: group.shortWorkingDirectory, action: nil, keyEquivalent: "")
-                headerItem.isEnabled = false
-                let headerFont = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize, weight: .semibold)
-                headerItem.attributedTitle = NSAttributedString(
-                    string: group.shortWorkingDirectory,
-                    attributes: [.font: headerFont, .foregroundColor: NSColor.secondaryLabelColor]
-                )
-                menu.addItem(headerItem)
+                menu.addItem(.headerItem(title: group.shortWorkingDirectory))
 
                 // Process items
                 for process in group.processes {
-                    let title = formatProcessTitle(process)
-                    let item = NSMenuItem(title: title, action: #selector(processItemClicked(_:)), keyEquivalent: "")
-                    item.target = self
-                    item.representedObject = process
-                    item.indentationLevel = 1
-                    menu.addItem(item)
+                    menu.addItem(.processItem(for: process, target: self, action: #selector(processItemClicked(_:))))
                 }
             }
 
@@ -94,14 +82,7 @@ final class MenuBarController {
             if !missingProcesses.isEmpty {
                 menu.addItem(NSMenuItem.separator())
 
-                let warningHeader = NSMenuItem(title: "⚠ Missing Processes", action: nil, keyEquivalent: "")
-                warningHeader.isEnabled = false
-                let warningFont = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize, weight: .semibold)
-                warningHeader.attributedTitle = NSAttributedString(
-                    string: "⚠ Missing Processes",
-                    attributes: [.font: warningFont, .foregroundColor: NSColor.systemOrange]
-                )
-                menu.addItem(warningHeader)
+                menu.addItem(.warningHeaderItem(title: "⚠ Missing Processes"))
 
                 for missing in missingProcesses {
                     let title = "  \(missing.name) (was: \(missing.pid))"
@@ -129,12 +110,6 @@ final class MenuBarController {
         menu.addItem(quitItem)
 
         return menu
-    }
-
-    private func formatProcessTitle(_ process: WatchedProcess) -> String {
-        let cpu = String(format: "%.1f%%", process.cpuPercent)
-        let mem = String(format: "%.0fMB", process.memoryMB)
-        return "\(process.displayName)  \(cpu)  \(mem)"
     }
 
     @objc private func processItemClicked(_ sender: NSMenuItem) {

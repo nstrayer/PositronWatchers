@@ -12,12 +12,7 @@ final class GlobMatcher {
     }
 
     func matchesAny(_ text: String, patterns: [ProcessPattern]) -> Bool {
-        for pattern in patterns where pattern.isEnabled {
-            if matches(text, pattern: pattern.pattern) {
-                return true
-            }
-        }
-        return false
+        patterns.contains { $0.isEnabled && matches(text, pattern: $0.pattern) }
     }
 
     private func getOrCompileRegex(for pattern: String) -> NSRegularExpression? {

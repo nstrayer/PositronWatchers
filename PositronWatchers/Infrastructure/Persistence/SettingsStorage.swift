@@ -55,11 +55,6 @@ final class SettingsStorage: ObservableObject {
         patterns.append(newPattern)
     }
 
-    func removePattern(at index: Int) {
-        guard patterns.indices.contains(index) else { return }
-        patterns.remove(at: index)
-    }
-
     func removePattern(id: UUID) {
         patterns.removeAll { $0.id == id }
     }

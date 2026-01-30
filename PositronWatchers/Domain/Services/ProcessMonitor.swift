@@ -62,10 +62,6 @@ final class ProcessMonitor: ObservableObject {
         projectPairCount = processGroups.count
     }
 
-    var allMatchedProcesses: [WatchedProcess] {
-        processGroups.flatMap(\.processes)
-    }
-
     var missingProcesses: [MissingProcess] {
         crashDetector.missingProcesses
     }

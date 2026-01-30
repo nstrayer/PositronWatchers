@@ -20,12 +20,4 @@ struct WatchedProcess: Identifiable, Hashable {
         }
         return name
     }
-
-    var shortWorkingDirectory: String {
-        let homeDir = FileManager.default.homeDirectoryForCurrentUser.path
-        if workingDirectory.hasPrefix(homeDir) {
-            return "~" + workingDirectory.dropFirst(homeDir.count)
-        }
-        return workingDirectory
-    }
 }
