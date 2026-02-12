@@ -22,6 +22,10 @@ final class ProcessMonitor: ObservableObject {
         self.settings = settings
         self.exitMonitor = exitMonitor
 
+        if exitMonitor == nil {
+            NSLog("ProcessExitMonitor unavailable -- crash detection will be limited")
+        }
+
         exitMonitor?.onProcessExit = { [weak self] pid, reason in
             guard let self else { return }
             self.crashDetector.recordExit(pid: pid, reason: reason)
@@ -56,6 +60,12 @@ final class ProcessMonitor: ObservableObject {
                 if !exitMonitor.isWatching(pid: process.pid) {
                     if exitMonitor.watch(pid: process.pid) {
                         crashDetector.markKqueueRegistered(pid: process.pid)
+                    } else {
+                        // ESRCH: process already exited between fetch and watch.
+                        // Without exit status we can't determine cause, so mark as
+                        // a known exit to prevent the poll-based fallback from
+                        // treating it as an unknown disappearance.
+                        crashDetector.recordKnownExit(pid: process.pid)
                     }
                 }
             }

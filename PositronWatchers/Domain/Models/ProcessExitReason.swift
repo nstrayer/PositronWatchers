@@ -5,6 +5,8 @@ enum ProcessExitReason: Equatable, Hashable {
     case signal(signal: Int32, name: String)
 
     /// Decodes raw waitpid-style status (same encoding as kevent.data for NOTE_EXITSTATUS).
+    /// The wait status only uses the low 16 bits (WIFEXITED/WIFSIGNALED macros mask with 0x7F
+    /// and 0xFF), so truncating from Int (kevent.data is intptr_t) to Int32 is safe.
     static func from(status: Int) -> ProcessExitReason {
         let raw = Int32(status)
         // WIFEXITED: (status & 0x7F) == 0
@@ -47,10 +49,12 @@ enum ProcessExitReason: Equatable, Hashable {
         case 4: return "SIGILL"
         case 5: return "SIGTRAP"
         case 6: return "SIGABRT"
+        case 7: return "SIGEMT"
         case 8: return "SIGFPE"
         case 9: return "SIGKILL"
         case 10: return "SIGBUS"
         case 11: return "SIGSEGV"
+        case 12: return "SIGSYS"
         case 13: return "SIGPIPE"
         case 14: return "SIGALRM"
         case 15: return "SIGTERM"

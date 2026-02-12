@@ -28,6 +28,7 @@ final class CrashDetector {
     /// Called from ProcessExitMonitor callback (on main thread).
     /// If the exit reason is a crash, immediately creates a MissingProcess entry.
     func recordExit(pid: pid_t, reason: ProcessExitReason) {
+        dispatchPrecondition(condition: .onQueue(.main))
         kqueueExitedPIDs[pid] = reason
         kqueueRegisteredPIDs.remove(pid)
 
@@ -46,10 +47,19 @@ final class CrashDetector {
 
     /// Mark a PID as having an active kqueue watch.
     func markKqueueRegistered(pid: pid_t) {
+        dispatchPrecondition(condition: .onQueue(.main))
         kqueueRegisteredPIDs.insert(pid)
     }
 
+    /// Record that a PID exited before kqueue registration could complete.
+    /// Prevents the poll-based fallback from treating it as an unknown disappearance.
+    func recordKnownExit(pid: pid_t) {
+        dispatchPrecondition(condition: .onQueue(.main))
+        kqueueExitedPIDs[pid] = .normalExit(code: 0)
+    }
+
     func update(currentProcesses: [WatchedProcess]) -> [MissingProcess] {
+        dispatchPrecondition(condition: .onQueue(.main))
         let currentPIDs = Set(currentProcesses.map(\.pid))
         var newlyMissing: [MissingProcess] = []
 
@@ -64,18 +74,10 @@ final class CrashDetector {
                     // kqueue watch is active but event hasn't arrived yet -- skip,
                     // the kqueue callback will handle it
                 } else {
-                    // Poll-based fallback: no kqueue watch was set up for this PID.
-                    // Treat as potential crash with unknown exit reason.
-                    let missing = MissingProcess(
-                        id: pid,
-                        name: process.name,
-                        commandLine: process.commandLine,
-                        workingDirectory: process.workingDirectory,
-                        detectedAt: Date(),
-                        exitReason: nil
-                    )
-                    missingProcesses.append(missing)
-                    newlyMissing.append(missing)
+                    // No kqueue watch was registered for this PID (e.g., process exited
+                    // before watch() was called, or ProcessExitMonitor failed to init).
+                    // Without exit status we can't distinguish crashes from normal exits,
+                    // so silently ignore rather than producing false positives.
                 }
             }
         }
@@ -96,11 +98,13 @@ final class CrashDetector {
     }
 
     func acknowledge(pid: pid_t) {
+        dispatchPrecondition(condition: .onQueue(.main))
         missingProcesses.removeAll { $0.pid == pid }
         kqueueExitedPIDs.removeValue(forKey: pid)
     }
 
     func acknowledgeAll() {
+        dispatchPrecondition(condition: .onQueue(.main))
         missingProcesses.removeAll()
         kqueueExitedPIDs.removeAll()
     }
