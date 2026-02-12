@@ -5,6 +5,7 @@ final class ProcessMonitor: ObservableObject {
     @Published private(set) var processGroups: [ProcessGroup] = []
     @Published private(set) var projectPairCount: Int = 0
     @Published private(set) var hasCrashes: Bool = false
+    let crashDetectionAvailable: Bool
 
     private let fetcher: ProcessInfoFetcher
     private let matcher: GlobMatcher
@@ -21,9 +22,10 @@ final class ProcessMonitor: ObservableObject {
         self.crashDetector = crashDetector
         self.settings = settings
         self.exitMonitor = exitMonitor
+        self.crashDetectionAvailable = exitMonitor != nil
 
         if exitMonitor == nil {
-            NSLog("ProcessExitMonitor unavailable -- crash detection will be limited")
+            NSLog("ProcessExitMonitor unavailable -- crash detection is disabled")
         }
 
         exitMonitor?.onProcessExit = { [weak self] pid, reason in
@@ -58,14 +60,18 @@ final class ProcessMonitor: ObservableObject {
         if let exitMonitor {
             for process in matchedProcesses {
                 if !exitMonitor.isWatching(pid: process.pid) {
-                    if exitMonitor.watch(pid: process.pid) {
+                    switch exitMonitor.watch(pid: process.pid) {
+                    case .registered:
                         crashDetector.markKqueueRegistered(pid: process.pid)
-                    } else {
-                        // ESRCH: process already exited between fetch and watch.
-                        // Without exit status we can't determine cause, so mark as
-                        // a known exit to prevent the poll-based fallback from
-                        // treating it as an unknown disappearance.
+                    case .processAlreadyExited:
+                        // Process exited between fetch and watch. Without exit status
+                        // we can't determine cause, so record as unknown.
                         crashDetector.recordKnownExit(pid: process.pid)
+                    case .error(let err):
+                        // Unexpected kevent failure -- process may still be alive but
+                        // we can't monitor it. Log and skip so it doesn't become a
+                        // false crash report on the next poll.
+                        NSLog("Failed to watch PID %d: errno %d (%s)", process.pid, err, strerror(err))
                     }
                 }
             }

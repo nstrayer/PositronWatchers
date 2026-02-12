@@ -13,6 +13,12 @@ private func sys_kevent(
     _ timeout: UnsafePointer<timespec>?
 ) -> Int32
 
+enum WatchResult {
+    case registered
+    case processAlreadyExited
+    case error(Int32)
+}
+
 /// Monitors process exits using kqueue's EVFILT_PROC filter.
 /// Provides the actual exit status/signal so we can distinguish crashes from normal termination.
 final class ProcessExitMonitor {
@@ -44,8 +50,8 @@ final class ProcessExitMonitor {
         source.cancel()
     }
 
-    /// Register a PID for exit monitoring. Returns false if the process already exited (ESRCH).
-    func watch(pid: pid_t) -> Bool {
+    /// Register a PID for exit monitoring.
+    func watch(pid: pid_t) -> WatchResult {
         var event = kevent(
             ident: UInt(pid),
             filter: Int16(EVFILT_PROC),
@@ -57,14 +63,17 @@ final class ProcessExitMonitor {
 
         let result = sys_kevent(kqueueFD, &event, 1, nil, 0, nil)
         if result < 0 {
-            // ESRCH means process already exited
-            return false
+            let err = errno
+            if err == ESRCH {
+                return .processAlreadyExited
+            }
+            return .error(err)
         }
 
         lock.lock()
         watchedPIDs.insert(pid)
         lock.unlock()
-        return true
+        return .registered
     }
 
     func isWatching(pid: pid_t) -> Bool {

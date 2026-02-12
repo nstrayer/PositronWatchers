@@ -55,7 +55,7 @@ final class CrashDetector {
     /// Prevents the poll-based fallback from treating it as an unknown disappearance.
     func recordKnownExit(pid: pid_t) {
         dispatchPrecondition(condition: .onQueue(.main))
-        kqueueExitedPIDs[pid] = .normalExit(code: 0)
+        kqueueExitedPIDs[pid] = .unknown
     }
 
     func update(currentProcesses: [WatchedProcess]) -> [MissingProcess] {

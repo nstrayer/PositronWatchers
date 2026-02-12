@@ -3,6 +3,8 @@ import Foundation
 enum ProcessExitReason: Equatable, Hashable {
     case normalExit(code: Int32)
     case signal(signal: Int32, name: String)
+    /// Exit status could not be determined (e.g., process exited before kqueue registration).
+    case unknown
 
     /// Decodes raw waitpid-style status (same encoding as kevent.data for NOTE_EXITSTATUS).
     /// The wait status only uses the low 16 bits (WIFEXITED/WIFSIGNALED macros mask with 0x7F
@@ -24,7 +26,7 @@ enum ProcessExitReason: Equatable, Hashable {
     /// True only for signals indicating a genuine crash.
     var isCrash: Bool {
         switch self {
-        case .normalExit:
+        case .normalExit, .unknown:
             return false
         case .signal(let sig, _):
             // SIGILL=4, SIGABRT=6, SIGFPE=8, SIGBUS=10, SIGSEGV=11
@@ -38,6 +40,8 @@ enum ProcessExitReason: Equatable, Hashable {
             return "exit(\(code))"
         case .signal(_, let name):
             return name
+        case .unknown:
+            return "unknown"
         }
     }
 

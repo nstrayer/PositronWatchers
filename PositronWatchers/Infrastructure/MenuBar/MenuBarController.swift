@@ -104,6 +104,13 @@ final class MenuBarController {
             }
         }
 
+        if !services.processMonitor.crashDetectionAvailable {
+            menu.addItem(NSMenuItem.separator())
+            let degradedItem = NSMenuItem(title: "Crash detection unavailable", action: nil, keyEquivalent: "")
+            degradedItem.isEnabled = false
+            menu.addItem(degradedItem)
+        }
+
         menu.addItem(NSMenuItem.separator())
 
         let prefsItem = NSMenuItem(title: "Preferences...", action: #selector(preferencesClicked), keyEquivalent: ",")
