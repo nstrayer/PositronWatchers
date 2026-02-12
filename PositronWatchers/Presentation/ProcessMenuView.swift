@@ -31,9 +31,17 @@ extension NSMenuItem {
     }
 
     static func killGroupItem(target: AnyObject?, action: Selector?) -> NSMenuItem {
-        let item = NSMenuItem(title: "Kill All in Folder", action: action, keyEquivalent: "")
+        let title = "Kill All in Folder"
+        let item = NSMenuItem(title: title, action: action, keyEquivalent: "")
         item.target = target
         item.indentationLevel = 1
+
+        let font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize, weight: .medium)
+        item.attributedTitle = NSAttributedString(
+            string: title,
+            attributes: [.font: font, .foregroundColor: NSColor.systemRed]
+        )
+
         return item
     }
 
