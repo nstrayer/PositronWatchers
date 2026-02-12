@@ -12,7 +12,7 @@ struct ProcessPattern: Identifiable, Codable, Hashable {
     }
 
     static let defaultPatterns: [ProcessPattern] = [
-        ProcessPattern(pattern: "*gulp*watch-client*"),
-        ProcessPattern(pattern: "*gulp*watch-extensions*")
+        ProcessPattern(pattern: "gulp*watch-client*"),
+        ProcessPattern(pattern: "gulp*watch-extensions*")
     ]
 }

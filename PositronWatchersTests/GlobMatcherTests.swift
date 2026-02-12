@@ -41,21 +41,24 @@ final class GlobMatcherTests: XCTestCase {
     // MARK: - Gulp Watch Patterns (From PRD)
 
     func testGulpWatchClientPattern() {
-        let pattern = "*gulp*watch-client*"
+        let pattern = "gulp*watch-client*"
 
-        XCTAssertTrue(matcher.matches("/usr/bin/node gulp watch-client", pattern: pattern))
-        XCTAssertTrue(matcher.matches("node /path/to/gulp watch-client --debug", pattern: pattern))
         XCTAssertTrue(matcher.matches("gulp watch-client", pattern: pattern))
+        XCTAssertTrue(matcher.matches("gulp watch-client --debug", pattern: pattern))
         XCTAssertFalse(matcher.matches("gulp watch-server", pattern: pattern))
         XCTAssertFalse(matcher.matches("npm run build", pattern: pattern))
+        // npm run wrappers should NOT match
+        XCTAssertFalse(matcher.matches("npm run gulp watch-client", pattern: pattern))
     }
 
     func testGulpWatchExtensionsPattern() {
-        let pattern = "*gulp*watch-extensions*"
+        let pattern = "gulp*watch-extensions*"
 
-        XCTAssertTrue(matcher.matches("/usr/bin/node gulp watch-extensions", pattern: pattern))
         XCTAssertTrue(matcher.matches("gulp watch-extensions --verbose", pattern: pattern))
+        XCTAssertTrue(matcher.matches("gulp watch-extensions watch-extension-media", pattern: pattern))
         XCTAssertFalse(matcher.matches("gulp watch-client", pattern: pattern))
+        // npm run wrappers should NOT match
+        XCTAssertFalse(matcher.matches("npm run gulp watch-extensions watch-extension-media", pattern: pattern))
     }
 
     // MARK: - Case Insensitivity
