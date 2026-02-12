@@ -53,7 +53,7 @@ final class CrashDetector {
 
     /// Record that a PID exited before kqueue registration could complete.
     /// Prevents the poll-based fallback from treating it as an unknown disappearance.
-    func recordKnownExit(pid: pid_t) {
+    func recordUnobservedExit(pid: pid_t) {
         dispatchPrecondition(condition: .onQueue(.main))
         kqueueExitedPIDs[pid] = .unknown
     }

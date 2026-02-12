@@ -66,7 +66,7 @@ final class ProcessMonitor: ObservableObject {
                     case .processAlreadyExited:
                         // Process exited between fetch and watch. Without exit status
                         // we can't determine cause, so record as unknown.
-                        crashDetector.recordKnownExit(pid: process.pid)
+                        crashDetector.recordUnobservedExit(pid: process.pid)
                     case .error(let err):
                         // Unexpected kevent failure -- process may still be alive but
                         // we can't monitor it. Log and skip so it doesn't become a

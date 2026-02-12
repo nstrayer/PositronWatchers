@@ -108,6 +108,7 @@ final class MenuBarController {
             menu.addItem(NSMenuItem.separator())
             let degradedItem = NSMenuItem(title: "Crash detection unavailable", action: nil, keyEquivalent: "")
             degradedItem.isEnabled = false
+            degradedItem.toolTip = "kqueue initialization failed. Process crash signals cannot be monitored."
             menu.addItem(degradedItem)
         }
 

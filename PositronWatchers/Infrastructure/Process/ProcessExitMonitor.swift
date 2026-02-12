@@ -13,15 +13,15 @@ private func sys_kevent(
     _ timeout: UnsafePointer<timespec>?
 ) -> Int32
 
-enum WatchResult {
-    case registered
-    case processAlreadyExited
-    case error(Int32)
-}
-
 /// Monitors process exits using kqueue's EVFILT_PROC filter.
 /// Provides the actual exit status/signal so we can distinguish crashes from normal termination.
 final class ProcessExitMonitor {
+    enum WatchResult {
+        case registered
+        case processAlreadyExited
+        case error(Int32)
+    }
+
     var onProcessExit: ((pid_t, ProcessExitReason) -> Void)?
 
     private let kqueueFD: Int32
