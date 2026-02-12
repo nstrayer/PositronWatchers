@@ -75,4 +75,13 @@ final class ProcessMonitor: ObservableObject {
         crashDetector.acknowledgeAll()
         hasCrashes = false
     }
+
+    func killGroup(_ group: ProcessGroup) {
+        let pids = Set(group.processes.map(\.pid))
+        crashDetector.suppress(pids: pids)
+        for pid in pids {
+            kill(pid, SIGTERM)
+        }
+        poll()
+    }
 }

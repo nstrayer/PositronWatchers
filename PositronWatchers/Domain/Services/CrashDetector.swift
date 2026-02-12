@@ -13,6 +13,11 @@ struct MissingProcess: Identifiable, Hashable {
 final class CrashDetector {
     private(set) var missingProcesses: [MissingProcess] = []
     private var previousProcesses: [pid_t: WatchedProcess] = [:]
+    private var suppressedPIDs: Set<pid_t> = []
+
+    func suppress(pids: Set<pid_t>) {
+        suppressedPIDs.formUnion(pids)
+    }
 
     func update(currentProcesses: [WatchedProcess]) -> [MissingProcess] {
         let currentPIDs = Set(currentProcesses.map(\.pid))
@@ -20,7 +25,7 @@ final class CrashDetector {
 
         // Find processes that were running but are now gone
         for (pid, process) in previousProcesses {
-            if !currentPIDs.contains(pid) {
+            if !currentPIDs.contains(pid) && !suppressedPIDs.contains(pid) {
                 let missing = MissingProcess(
                     id: pid,
                     name: process.name,
@@ -38,6 +43,8 @@ final class CrashDetector {
         for process in currentProcesses {
             previousProcesses[process.pid] = process
         }
+
+        suppressedPIDs.removeAll()
 
         return newlyMissing
     }

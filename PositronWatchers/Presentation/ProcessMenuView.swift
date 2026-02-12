@@ -30,6 +30,13 @@ extension NSMenuItem {
         return item
     }
 
+    static func killGroupItem(target: AnyObject?, action: Selector?) -> NSMenuItem {
+        let item = NSMenuItem(title: "Kill All in Folder", action: action, keyEquivalent: "")
+        item.target = target
+        item.indentationLevel = 1
+        return item
+    }
+
     static func warningHeaderItem(title: String) -> NSMenuItem {
         let item = NSMenuItem(title: title, action: nil, keyEquivalent: "")
         item.isEnabled = false

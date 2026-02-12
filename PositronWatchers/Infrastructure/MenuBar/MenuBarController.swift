@@ -76,6 +76,11 @@ final class MenuBarController {
                 for process in group.processes {
                     menu.addItem(.processItem(for: process, target: self, action: #selector(processItemClicked(_:))))
                 }
+
+                // Kill all in this group
+                let killItem = NSMenuItem.killGroupItem(target: self, action: #selector(killGroupClicked(_:)))
+                killItem.representedObject = group
+                menu.addItem(killItem)
             }
 
             // Missing processes section
@@ -117,6 +122,11 @@ final class MenuBarController {
         let killCommand = "kill \(process.pid)"
         NSPasteboard.general.clearContents()
         NSPasteboard.general.setString(killCommand, forType: .string)
+    }
+
+    @objc private func killGroupClicked(_ sender: NSMenuItem) {
+        guard let group = sender.representedObject as? ProcessGroup else { return }
+        services.processMonitor.killGroup(group)
     }
 
     @objc private func missingProcessClicked(_ sender: NSMenuItem) {
