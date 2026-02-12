@@ -10,15 +10,23 @@ final class ProcessMonitor: ObservableObject {
     private let matcher: GlobMatcher
     private let crashDetector: CrashDetector
     private let settings: SettingsStorage
+    private let exitMonitor: ProcessExitMonitor?
 
     private var timer: Timer?
     private let pollingInterval: TimeInterval = 5.0
 
-    init(fetcher: ProcessInfoFetcher, matcher: GlobMatcher, crashDetector: CrashDetector, settings: SettingsStorage) {
+    init(fetcher: ProcessInfoFetcher, matcher: GlobMatcher, crashDetector: CrashDetector, settings: SettingsStorage, exitMonitor: ProcessExitMonitor? = nil) {
         self.fetcher = fetcher
         self.matcher = matcher
         self.crashDetector = crashDetector
         self.settings = settings
+        self.exitMonitor = exitMonitor
+
+        exitMonitor?.onProcessExit = { [weak self] pid, reason in
+            guard let self else { return }
+            self.crashDetector.recordExit(pid: pid, reason: reason)
+            self.hasCrashes = self.crashDetector.hasMissingProcesses
+        }
     }
 
     func startMonitoring() {
@@ -40,6 +48,17 @@ final class ProcessMonitor: ObservableObject {
         // Filter processes matching any enabled pattern
         let matchedProcesses = allProcesses.filter { process in
             matcher.matchesAny(process.commandLine, patterns: patterns)
+        }
+
+        // Register new matched PIDs with the kqueue exit monitor
+        if let exitMonitor {
+            for process in matchedProcesses {
+                if !exitMonitor.isWatching(pid: process.pid) {
+                    if exitMonitor.watch(pid: process.pid) {
+                        crashDetector.markKqueueRegistered(pid: process.pid)
+                    }
+                }
+            }
         }
 
         // Update crash detector
@@ -78,7 +97,6 @@ final class ProcessMonitor: ObservableObject {
 
     func killGroup(_ group: ProcessGroup) {
         let pids = Set(group.processes.map(\.pid))
-        crashDetector.suppress(pids: pids)
         for pid in pids {
             kill(pid, SIGTERM)
         }

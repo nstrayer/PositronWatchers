@@ -58,13 +58,14 @@ final class CrashDetectorTests: XCTestCase {
         // Establish baseline
         _ = detector.update(currentProcesses: initialProcesses)
 
-        // Process 100 disappears
+        // Process 100 disappears (no kqueue registered, so poll-based fallback)
         let updatedProcesses = [makeProcess(pid: 200, name: "gulp-ext")]
         let missing = detector.update(currentProcesses: updatedProcesses)
 
         XCTAssertEqual(missing.count, 1)
         XCTAssertEqual(missing.first?.pid, 100)
         XCTAssertEqual(missing.first?.name, "gulp-client")
+        XCTAssertNil(missing.first?.exitReason)
         XCTAssertTrue(detector.hasMissingProcesses)
         XCTAssertEqual(detector.missingCount, 1)
     }
@@ -164,6 +165,8 @@ final class CrashDetectorTests: XCTestCase {
         XCTAssertEqual(missing.commandLine, "/usr/bin/node gulp watch-client")
         XCTAssertEqual(missing.workingDirectory, "/home/user/project")
         XCTAssertNotNil(missing.detectedAt)
+        XCTAssertNil(missing.exitReason)
+        XCTAssertEqual(missing.crashSignalName, "unknown")
     }
 
     // MARK: - Accumulation
@@ -179,5 +182,97 @@ final class CrashDetectorTests: XCTestCase {
         // Third cycle: process 200 disappears
         _ = detector.update(currentProcesses: [])
         XCTAssertEqual(detector.missingCount, 2)
+    }
+
+    // MARK: - kqueue Exit Path
+
+    func testRecordExitWithCrashSignalCreatesMissingProcess() {
+        let processes = [makeProcess(pid: 100, name: "gulp-client")]
+        _ = detector.update(currentProcesses: processes)
+
+        // Simulate kqueue delivering SIGSEGV (signal 11)
+        let reason = ProcessExitReason.signal(signal: 11, name: "SIGSEGV")
+        detector.recordExit(pid: 100, reason: reason)
+
+        XCTAssertEqual(detector.missingCount, 1)
+        XCTAssertEqual(detector.missingProcesses.first?.exitReason, reason)
+        XCTAssertEqual(detector.missingProcesses.first?.crashSignalName, "SIGSEGV")
+        XCTAssertTrue(detector.hasMissingProcesses)
+    }
+
+    func testRecordExitWithSIGTERMDoesNotCreateMissingProcess() {
+        let processes = [makeProcess(pid: 100, name: "gulp-client")]
+        _ = detector.update(currentProcesses: processes)
+
+        // Simulate kqueue delivering SIGTERM (signal 15)
+        let reason = ProcessExitReason.signal(signal: 15, name: "SIGTERM")
+        detector.recordExit(pid: 100, reason: reason)
+
+        XCTAssertEqual(detector.missingCount, 0)
+        XCTAssertFalse(detector.hasMissingProcesses)
+    }
+
+    func testRecordExitWithSIGKILLDoesNotCreateMissingProcess() {
+        let processes = [makeProcess(pid: 100, name: "gulp-client")]
+        _ = detector.update(currentProcesses: processes)
+
+        // Simulate kqueue delivering SIGKILL (signal 9)
+        let reason = ProcessExitReason.signal(signal: 9, name: "SIGKILL")
+        detector.recordExit(pid: 100, reason: reason)
+
+        XCTAssertEqual(detector.missingCount, 0)
+        XCTAssertFalse(detector.hasMissingProcesses)
+    }
+
+    func testRecordExitWithNormalExitDoesNotCreateMissingProcess() {
+        let processes = [makeProcess(pid: 100, name: "gulp-client")]
+        _ = detector.update(currentProcesses: processes)
+
+        // Simulate kqueue delivering normal exit(0)
+        let reason = ProcessExitReason.normalExit(code: 0)
+        detector.recordExit(pid: 100, reason: reason)
+
+        XCTAssertEqual(detector.missingCount, 0)
+        XCTAssertFalse(detector.hasMissingProcesses)
+    }
+
+    func testKqueueRegisteredPIDSkippedByPollFallback() {
+        let processes = [makeProcess(pid: 100, name: "gulp-client")]
+        _ = detector.update(currentProcesses: processes)
+
+        // Mark PID as kqueue-registered (simulating successful watch() call)
+        detector.markKqueueRegistered(pid: 100)
+
+        // Process disappears from poll -- should NOT create missing process
+        // because kqueue is watching it
+        let missing = detector.update(currentProcesses: [])
+        XCTAssertTrue(missing.isEmpty)
+        XCTAssertEqual(detector.missingCount, 0)
+    }
+
+    func testKqueueExitedPIDNotDuplicatedByPoll() {
+        let processes = [makeProcess(pid: 100, name: "gulp-client")]
+        _ = detector.update(currentProcesses: processes)
+
+        // kqueue delivers crash before poll runs
+        let reason = ProcessExitReason.signal(signal: 11, name: "SIGSEGV")
+        detector.recordExit(pid: 100, reason: reason)
+        XCTAssertEqual(detector.missingCount, 1)
+
+        // Poll now sees the process is gone -- should not duplicate
+        let missing = detector.update(currentProcesses: [])
+        XCTAssertTrue(missing.isEmpty)
+        XCTAssertEqual(detector.missingCount, 1)
+    }
+
+    func testRecordExitWithSIGABRTCreatesMissingProcess() {
+        let processes = [makeProcess(pid: 100, name: "gulp-client")]
+        _ = detector.update(currentProcesses: processes)
+
+        let reason = ProcessExitReason.signal(signal: 6, name: "SIGABRT")
+        detector.recordExit(pid: 100, reason: reason)
+
+        XCTAssertEqual(detector.missingCount, 1)
+        XCTAssertEqual(detector.missingProcesses.first?.crashSignalName, "SIGABRT")
     }
 }

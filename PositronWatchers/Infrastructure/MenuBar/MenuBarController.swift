@@ -87,10 +87,10 @@ final class MenuBarController {
             if !missingProcesses.isEmpty {
                 menu.addItem(NSMenuItem.separator())
 
-                menu.addItem(.warningHeaderItem(title: "⚠ Missing Processes"))
+                menu.addItem(.warningHeaderItem(title: "⚠ Crashed Processes"))
 
                 for missing in missingProcesses {
-                    let title = "  \(missing.name) (was: \(missing.pid))"
+                    let title = "  \(missing.name) [\(missing.crashSignalName)] (was: \(missing.pid))"
                     let item = NSMenuItem(title: title, action: #selector(missingProcessClicked(_:)), keyEquivalent: "")
                     item.target = self
                     item.representedObject = missing

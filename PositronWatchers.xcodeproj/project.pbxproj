@@ -24,6 +24,8 @@
 		015 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 115; };
 		016 /* GlobMatcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 118; };
 		017 /* CrashDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 119; };
+		018 /* ProcessExitReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121; };
+		019 /* ProcessExitMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 122; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,8 @@
 		118 /* GlobMatcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobMatcherTests.swift; sourceTree = "<group>"; };
 		119 /* CrashDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashDetectorTests.swift; sourceTree = "<group>"; };
 		120 /* PositronWatchersTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PositronWatchersTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		121 /* ProcessExitReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessExitReason.swift; sourceTree = "<group>"; };
+		122 /* ProcessExitMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessExitMonitor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,7 @@
 				104 /* WatchedProcess.swift */,
 				105 /* ProcessPattern.swift */,
 				106 /* ProcessGroup.swift */,
+				121 /* ProcessExitReason.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -160,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				111 /* ProcessInfoFetcher.swift */,
+				122 /* ProcessExitMonitor.swift */,
 			);
 			path = Process;
 			sourceTree = "<group>";
@@ -322,6 +328,8 @@
 				012 /* SettingsStorage.swift in Sources */,
 				013 /* ProcessMenuView.swift in Sources */,
 				014 /* PreferencesWindow.swift in Sources */,
+				018 /* ProcessExitReason.swift in Sources */,
+				019 /* ProcessExitMonitor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
